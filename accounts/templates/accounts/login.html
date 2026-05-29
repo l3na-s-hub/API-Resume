@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Вход</title>
+    <style>
+        body { font-family: Arial; margin: 50px; }
+        .form-group { margin: 10px 0; }
+        input { padding: 8px; width: 250px; }
+        button { padding: 8px 15px; }
+    </style>
+</head>
+<body>
+    <h1>Вход</h1>
+    <form method="post">
+        {% csrf_token %}
+        {% for field in form %}
+            <div class="form-group">
+                <label>{{ field.label }}</label><br>
+                {{ field }}
+            </div>
+        {% endfor %}
+        <button type="submit">Войти</button>
+    </form>
+    <p>Нет аккаунта? <a href="{% url 'register' %}">Зарегистрироваться</a></p>
+</body>
+</html>

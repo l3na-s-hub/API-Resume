@@ -1,0 +1,61 @@
+{% extends 'resume_admin/base.html' %}
+
+{% block title %}Список резюме{% endblock %}
+
+{% block content %}
+<div class="row mb-4">
+    <div class="col">
+        <h1>Резюме</h1>
+    </div>
+    {% if user.is_authenticated %}
+    <div class="col text-end">
+        <a href="{% url 'resume_create' %}" class="btn btn-primary">
+            <i class="fas fa-plus"></i> Создать резюме
+        </a>
+    </div>
+    {% endif %}
+</div>
+
+<div class="card mb-4">
+    <div class="card-body">
+        <form method="get" class="row g-3">
+            <div class="col-md-10">
+                <input type="text" name="q" class="form-control" placeholder="Поиск по ФИО или должности..." value="{{ query }}">
+            </div>
+            <div class="col-md-2">
+                <button type="submit" class="btn btn-primary w-100">
+                    <i class="fas fa-search"></i> Найти
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<div class="row">
+    {% for resume in resumes %}
+    <div class="col-md-6 col-lg-4 mb-4">
+        <div class="card h-100 shadow-sm">
+            <div class="card-body">
+                <h5 class="card-title">{{ resume.secondname }} {{ resume.firstname }}</h5>
+                <h6 class="card-subtitle mb-2 text-muted">{{ resume.position }}</h6>
+                <p class="card-text">
+                    <i class="fas fa-map-marker-alt"></i> {{ resume.city }}<br>
+                    <i class="fas fa-phone"></i> {{ resume.phone }}<br>
+                    <i class="fas fa-envelope"></i> {{ resume.email }}
+                </p>
+                <span class="badge {% if resume.status %}bg-success{% else %}bg-secondary{% endif %}">
+                    {% if resume.status %}Активно{% else %}Не активно{% endif %}
+                </span>
+            </div>
+            <div class="card-footer bg-transparent">
+                <a href="{% url 'resume_detail' resume.id %}" class="btn btn-sm btn-outline-primary">Подробнее</a>
+            </div>
+        </div>
+    </div>
+    {% empty %}
+    <div class="col">
+        <div class="alert alert-info">Резюме не найдены</div>
+    </div>
+    {% endfor %}
+</div>
+{% endblock %}

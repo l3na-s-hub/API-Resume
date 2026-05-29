@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Удаление резюме</title>
+    <style>
+        body { font-family: Arial; margin: 50px; text-align: center; }
+        button { padding: 10px 20px; margin: 10px; cursor: pointer; }
+        .confirm { background: #dc3545; color: white; border: none; }
+        .cancel { background: #6c757d; color: white; border: none; }
+    </style>
+</head>
+<body>
+    <h1>Удалить резюме?</h1>
+    <p>{{ resume.secondname }} {{ resume.firstname }} - {{ resume.position }}</p>
+    <form method="post">
+        {% csrf_token %}
+        <button type="submit" class="confirm">Да, удалить</button>
+        <a href="{% url 'resume_detail' resume.id %}"><button type="button" class="cancel">Отмена</button></a>
+    </form>
+</body>
+</html>
